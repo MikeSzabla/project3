@@ -1,2 +1,2 @@
 # CSV Input Calculator
-Program works; added changes to get coverage
+Program works; adding changes to get coverage
