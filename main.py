@@ -2,14 +2,16 @@ from pathlib import Path
 from csv_io.inputdata import InputData
 from csv_io.outputdata import OutputData
 import os
+import shutil
 import datetime
 
 
 def main():
-    # set up directory
+    # gather necessary directory paths
     root_dir = Path(__file__).parent
     input_folder_dir = root_dir / 'input'
     output_folder_dir = root_dir / 'output'
+    done_folder_dir = root_dir / 'done'
     now = datetime.datetime.now()
 
     # create a dataframe using the input data
@@ -28,6 +30,10 @@ def main():
     if not exception_dataframe.empty:
         filename = 'exceptions_'+now.strftime("%m-%d-%Y_%H-%M-%S")
         exception_dataframe.to_csv(os.path.join(output_folder_dir, filename))
+
+    # move files to done directory
+    for file in input_data.get_list_of_input_paths():
+        shutil.move(file, done_folder_dir)
 
 
 if __name__ == "__main__":

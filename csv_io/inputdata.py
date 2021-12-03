@@ -1,6 +1,7 @@
 """InputData.py: stores the InputData class"""
 
 import os
+from pathlib import Path
 import pandas as pd
 
 
@@ -21,9 +22,11 @@ class InputData:
     def generate_list_of_input_paths(folder_dir):
         """takes all files in the passed in directory and returns a list of their paths"""
         path_list = []
-        for dirpath, _, filenames in os.walk(folder_dir):
-            for f in filenames:
-                path_list.append(os.path.abspath(os.path.join(dirpath, f)))
+        for root, dirs, files in os.walk(folder_dir):
+            for file in files:
+                if Path(file).suffix != '.csv':
+                    continue
+                path_list.append(os.path.abspath(os.path.join(root, file)))
         return path_list
 
     @staticmethod
